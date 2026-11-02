@@ -1,18 +1,43 @@
 {
   "expo": {
-    "name": "_scaffold",
-    "slug": "_scaffold",
+    "name": "NFC BSV Wallet",
+    "slug": "nfc-bsv-wallet",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "scaffold",
+    "scheme": "nfcwallet",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "bundleIdentifier": "com.nfcwallet.bsv",
+      "icon": "./assets/expo.icon",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Allow NFC BSV Wallet to access the camera to scan payment QR codes and BRC-100 requests.",
+        "NFCReaderUsageDescription": "Allow NFC BSV Wallet to read and write NFC tags and communicate via tap-to-pay.",
+        "NSFaceIDUsageDescription": "Allow NFC BSV Wallet to use Face ID to unlock your hardware-backed BSV keys and authorize transactions.",
+        "com.apple.developer.nfc.readersession.formats": [
+          "NDEF",
+          "TAG"
+        ]
+      },
+      "entitlements": {
+        "com.apple.developer.nfc.readersession.formats": [
+          "NDEF",
+          "TAG"
+        ]
+      }
     },
     "android": {
+      "package": "com.nfcwallet.bsv",
+      "permissions": [
+        "CAMERA",
+        "NFC",
+        "USE_BIOMETRIC",
+        "android.permission.CAMERA",
+        "android.permission.NFC",
+        "android.permission.USE_BIOMETRIC"
+      ],
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#0A0E17",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
@@ -25,10 +50,32 @@
     },
     "plugins": [
       "expo-router",
+      "expo-dev-client",
+      "expo-secure-store",
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Allow NFC BSV Wallet to use Face ID to unlock your hardware-backed BSV keys and authorize transactions."
+        }
+      ],
+      "expo-sqlite",
+      [
+        "./plugins/withVisionCamera.js",
+        {
+          "cameraPermissionText": "Allow NFC BSV Wallet to access the camera to scan payment QR codes and BRC-100 requests."
+        }
+      ],
+      [
+        "react-native-nfc-manager",
+        {
+          "nfcPermission": "Allow NFC BSV Wallet to read and write NFC tags and communicate via tap-to-pay.",
+          "includeNdefEntitlement": true
+        }
+      ],
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#208AEF",
+          "backgroundColor": "#0A0E17",
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
